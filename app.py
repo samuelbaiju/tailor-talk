@@ -15,7 +15,7 @@ prompt = st.chat_input("Ask me to schedule something...")
 
 if prompt:
     st.session_state.chat.append({"role": "user", "content": prompt})
-    res = requests.post("http://localhost:8000/chat/", json={"message": prompt})
+    res = requests.post("https://tailor-talk-93qz.onrender.com/chat/", json={"message": prompt})
     reply = res.json()["response"]
     st.session_state.chat.append({"role": "assistant", "content": reply})
     st.chat_message("assistant").write(reply)
