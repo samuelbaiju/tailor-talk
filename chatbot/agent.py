@@ -169,12 +169,13 @@ async def generate_response(user_input):
 
             # Confirm using GPT
             gpt_response = client.chat.completions.create(
-                model="mistralai/mixtral-8x7b-instruct",
+                model="meta-llama/llama-3-8b-instruct",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant that confirms scheduled meetings."},
                     {"role": "user", "content": f"A user scheduled a meeting on {parsed_date}. Confirm the booking clearly and politely."}
                 ]
             )
+
             friendly = gpt_response.choices[0].message.content
 
             return f"""{friendly}
