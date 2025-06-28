@@ -12,12 +12,14 @@ import pytz
 from gcal.calendar_auth import get_calendar_service
 from datetime import time
 
-load_dotenv()
+if os.getenv("RENDER") != "true":  # or check for DEBUG=True
+    load_dotenv()
 
 client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url="https://openrouter.ai/api/v1"
 )
+print("🔑 ENV OPENROUTER_API_KEY:", os.getenv("OPENROUTER_API_KEY"))
 
 def correct_common_typos(text: str) -> str:
     corrections = {
