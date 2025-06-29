@@ -140,11 +140,11 @@ async def generate_response(user_input):
     try:
         user_lower = user_input.lower()
 
-        if any(q in user_lower for q in ["free time", "any time", "available time", "availability"]):
+        if any(q in user_lower for q in ["free time", "any time", "available time", "availability","time slots", "when can we meet", "when are you free", "when can i book"]):
             return await check_availability(user_input)
 
         # ✅ Check for booking-related keywords
-        if any(keyword in user_lower for keyword in ["book", "schedule", "set up", "can you", "arrange"]):
+        if any(keyword in user_lower for keyword in ["book", "schedule", "set up", "can you", "arrange"," make an appointment", "meeting","appointment","reserve",]):
             parsed_date, suggestion = extract_datetime(user_input)
             print("🔍 Raw user input:", user_input)
             print("🔍 Extracted datetime:", parsed_date)
@@ -169,13 +169,13 @@ async def generate_response(user_input):
 
             # Confirm using GPT
             gpt_response = client.chat.completions.create(
-                model="meta-llama/llama-3-8b-instruct",
+                model="mistralai/mixtral-8x7b-instruct",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant that confirms scheduled meetings."},
                     {"role": "user", "content": f"A user scheduled a meeting on {parsed_date}. Confirm the booking clearly and politely."}
                 ]
             )
-
+            
             friendly = gpt_response.choices[0].message.content
 
             return f"""{friendly}
